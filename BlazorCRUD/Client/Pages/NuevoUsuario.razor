@@ -38,6 +38,13 @@
           <ValidationMessage For="@(() => usuario.Email)"/>
         </div>
     </div>
+    <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <div class="col-md-4">
+            <InputText type="password" class="form-control" @bind-Value="usuario.Password" />
+            <ValidationMessage For="@(() => usuario.Password)" />
+        </div>
+    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <button class="btn btn-light" @onclick="Cancel">Cancelar</button>
