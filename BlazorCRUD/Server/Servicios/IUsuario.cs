@@ -12,6 +12,8 @@ namespace BlazorCRUD.Server.Servicios
 
         public Usuario DatosUsuario(int id);
 
+        public Usuario DatosUsuario1(string Email);
+
         public void BorrarUsuario(int id);
 
 

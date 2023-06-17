@@ -2,6 +2,9 @@
 
 using BlazorCRUD.Server.Modelos;
 using BlazorCRUD.Server.Clases;
+
+using BlazorCRUD.Shared;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IO;
@@ -16,7 +19,7 @@ namespace BlazorCRUD.Server.Controllers
         private readonly IUsuario iUsuario;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-       public FileChecker oFileChecker = new FileChecker();
+        public FileChecker oFileChecker = new FileChecker();
 
         public UsuarioController(IUsuario iUser, IWebHostEnvironment webHostEnvironment)
         {
@@ -25,14 +28,14 @@ namespace BlazorCRUD.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Usuario>> ListaUsuarios()
+        public async Task<List<Modelos.Usuario>> ListaUsuarios()
         {
             return await Task.FromResult(iUsuario.DatosUsuarios());
         }
 
 
         [HttpPost]
-        public void Post(Usuario usuario)
+        public void Post(Modelos.Usuario usuario)
         {
             iUsuario.NuevoUsuario(usuario);
         }
@@ -40,7 +43,7 @@ namespace BlazorCRUD.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult MostrarUsuario(int id)
         {
-            Usuario u = iUsuario.DatosUsuario(id);
+            Modelos.Usuario u = iUsuario.DatosUsuario(id);
             if (u != null)
             {
                 return Ok(u);
@@ -49,7 +52,7 @@ namespace BlazorCRUD.Server.Controllers
         }
 
         [HttpPut]
-        public void Modificar(Usuario usuario)
+        public void Modificar(Modelos.Usuario usuario)
         {
             iUsuario.ActualizaUsuario(usuario);
         }
@@ -59,6 +62,35 @@ namespace BlazorCRUD.Server.Controllers
         {
             iUsuario.BorrarUsuario(id);
             return Ok();
+        }
+
+        ///Agregar Metodo Para El Login
+        ///
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginClase login)
+        {
+            //Obtener datos del usuario a comparar en base datos
+            Modelos.Usuario sesionDTO = iUsuario.DatosUsuario1(login.Correo);
+
+            Modelos.Usuario sesionActual = new Modelos.Usuario();
+
+
+            if (login.Correo.Equals(sesionDTO.Email) && login.Clave.Equals(sesionDTO.Password))
+            {
+                sesionActual.Nombre = sesionDTO.Nombre;
+                sesionActual.Email = sesionDTO.Email;
+
+
+            }
+            else
+            {
+                sesionActual.Nombre = sesionDTO.Nombre;
+                sesionActual.Email = sesionDTO.Email;
+
+            }
+
+            return StatusCode(StatusCodes.Status200OK, sesionActual); //Investigar
         }
     }
 }

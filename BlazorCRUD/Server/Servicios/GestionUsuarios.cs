@@ -1,9 +1,10 @@
 ﻿using BlazorCRUD.Server.Servicios;
+using BlazorCRUD.Server.Modelos;
 
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace BlazorCRUD.Server.Modelos
+namespace BlazorCRUD.Server.Servicios
 {
     public class GestionUsuarios : IUsuario
     {
@@ -54,6 +55,26 @@ namespace BlazorCRUD.Server.Modelos
             try
             {
                 Usuario? u = dbContext.Usuarios.Find(id);
+                if (u != null)
+                {
+                    return u;
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public Usuario DatosUsuario1(string Email)
+        {
+            try
+            {
+                Usuario? u = dbContext.Usuarios.Find(Email);
                 if (u != null)
                 {
                     return u;
