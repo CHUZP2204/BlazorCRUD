@@ -2,6 +2,10 @@
 @inject HttpClient Http
 @using BlazorCRUD.Shared;
 
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Authorization;
+@attribute [Authorize]
+
 <h2>  Mi primer pagina en BLAZOR CRUD </h2>
 
 <div >

@@ -1,7 +1,14 @@
 ﻿@page "/"
+@layout LoginLayout
+
 @inject HttpClient httpClient
 @inject NavigationManager navManager
+@inject AuthenticationStateProvider autenticacionProvider
+
 @using BlazorCRUD.Shared
+@using BlazorCRUD.Client.Extensiones
+@using Microsoft.AspNetCore.Components.Authorization
+
 
 
 <h3>Login</h3>
@@ -34,9 +41,10 @@
 
         if (loginResponse.IsSuccessStatusCode)
         {
+            //Aca Presente error Obtiene nulos
             var sesionUsuario = await loginResponse.Content.ReadFromJsonAsync<LoginClase>();
-            //var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
-            //await autenticacionExt.ActualizarEstadoAutenticacion(sesionUsuario);
+            var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
+            await autenticacionExt.ActualizarEstadoAutenticacion(sesionUsuario);
 
             navManager.NavigateTo("/Index");
         }

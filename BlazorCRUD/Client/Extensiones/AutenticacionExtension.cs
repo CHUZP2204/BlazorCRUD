@@ -1,9 +1,11 @@
 ﻿using Blazored.SessionStorage;
 using BlazorCRUD.Shared;
 
+
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.AccessControl;
 using System.Security.Claims;
+using BlazorCRUD.Client.Pages.Login;
 
 namespace BlazorCRUD.Client.Extensiones
 {
@@ -18,15 +20,15 @@ namespace BlazorCRUD.Client.Extensiones
             _sessionStorage = sessionStorage;
         }
 
-        public async Task ActualizarEstadoAutenticacion(Usuario? sesionUsuario)
+        public async Task ActualizarEstadoAutenticacion(LoginClase? sesionUsuario)
         {
             ClaimsPrincipal claimsPrincipal;
             if (sesionUsuario != null)
             {
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,sesionUsuario.Nombre),
-                    new Claim(ClaimTypes.Email,sesionUsuario.Email)
+                    new Claim(ClaimTypes.Name,sesionUsuario.Correo),
+                    new Claim(ClaimTypes.Email,sesionUsuario.Correo)
                 }, "JwtAuth"));
 
                 await _sessionStorage.GuardarStorage("sesionUsuario", sesionUsuario);

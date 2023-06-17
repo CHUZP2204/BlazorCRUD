@@ -8,9 +8,9 @@
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
                 <NotAuthorized>
-                    @{
+                   @{
                         if (context.User.Identity?.IsAuthenticated != true)
                         {
                             navManager.NavigateTo("/");
@@ -19,9 +19,10 @@
                         {
                             <p class="alert alert-danger">No esta autorizado para ver esta Pagina</p>
                         }
-                    }
+                   }
                 </NotAuthorized>
-            </AuthorizeView>
+
+            </AuthorizeRouteView>
            
         </Found>
         <NotFound>

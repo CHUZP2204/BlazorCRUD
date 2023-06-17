@@ -3,6 +3,7 @@ using BlazorCRUD.Server.Modelos;
 
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlazorCRUD.Server.Servicios
 {
@@ -72,9 +73,12 @@ namespace BlazorCRUD.Server.Servicios
 
         public Usuario DatosUsuario1(string Email)
         {
+            Usuario usuarioTest = new Usuario();
+            usuarioTest.Email = Email;
             try
             {
-                Usuario? u = dbContext.Usuarios.Find(Email);
+                //Usuario? u = dbContext.Usuarios.Find( (usuarioTest.Email);
+                Usuario? u = dbContext.Usuarios.Where(x => x.Email == Email).FirstOrDefault();
                 if (u != null)
                 {
                     return u;
