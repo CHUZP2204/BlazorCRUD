@@ -19,4 +19,6 @@ public partial class Usuario
     public DateTime FechaAlta { get; set; }
 
     public DateTime? FechaBaja { get; set; }
+
+    public string? Password { get; set; }
 }

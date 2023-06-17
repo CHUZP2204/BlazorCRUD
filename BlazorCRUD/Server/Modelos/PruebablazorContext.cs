@@ -72,6 +72,9 @@ public partial class PruebablazorContext : DbContext
             entity.Property(e => e.Nombre)
                 .HasMaxLength(500)
                 .IsUnicode(false);
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Telefono)
                 .HasMaxLength(50)
                 .IsUnicode(false);
