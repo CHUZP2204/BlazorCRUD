@@ -1,4 +1,7 @@
-﻿@code {
+﻿@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Authorization;
+
+@code {
 
 }
 
@@ -6,7 +9,7 @@
     <nav class="sidebar-wrapper">
         <div class="sidebar-content">
             <div class="sidebar-brand">
-                
+
                 <label for="mostrar-Barra"></label>
                 <div class="menuH">
                     <label for="mostrar-Barra">
@@ -26,7 +29,14 @@
                 </div>
                 <div class="userInfo">
                     <span class="userName">
-                        <strong><a>Jesus Perez Saenz</a></strong>
+                        <strong>
+                            <a>
+                                <AuthorizeView>
+                                    @context.User.Identity!.Name
+                                </AuthorizeView>
+                                
+                            </a>
+                        </strong>
                     </span>
                     <span class="userRole">
                         <strong><a>EMPLEADO</a></strong>
@@ -58,7 +68,7 @@
                                 <i class="fa fa-building"></i>
                             </span>
                             <span>
-                                <a href="/">Inicio</a>
+                                <a href="/InicioPrincipal">Inicio</a>
                             </span>
                             <span class="notificacion-yellow">
                                 NEW

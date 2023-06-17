@@ -1,4 +1,11 @@
-﻿<!--Inicio NAVBAR Horizontal-->
+﻿@inject HttpClient httpClient
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider autenticacionProvider
+
+@using BlazorCRUD.Shared
+@using BlazorCRUD.Client.Extensiones
+@using Microsoft.AspNetCore.Components.Authorization
+<!--Inicio NAVBAR Horizontal-->
 <nav class="barra-horizontal">
     <div class="menuH">
         <label for="mostrar-Barra">
@@ -10,20 +17,28 @@
         </label>
 
     </div>
-
+   
     <label for="mostrar-Barra" id="btnJesus">Mostrar</label>
     <div class="items">
         <div class="item">
             <a href="#">
                 <div class="item-text">
-                    hola
+                    item
+                </div>
+            </a>
+        </div>
+        
+        <div class="item">
+            <a href="#">
+                <div class="item-text">
+                    item1
                 </div>
             </a>
         </div>
         <div class="item">
             <a href="#">
                 <div class="item-text">
-                    hola
+                    <a @onclick="CerrarSesion" href="javascript:void(0)">Salir</a>
                 </div>
             </a>
         </div>
@@ -40,5 +55,12 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async Task CerrarSesion()
+    {
+        var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
+        await autenticacionExt.ActualizarEstadoAutenticacion(null);
+        navManager.NavigateTo("/", true);
     }
 }

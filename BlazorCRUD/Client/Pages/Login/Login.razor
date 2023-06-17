@@ -41,8 +41,8 @@
 
         if (loginResponse.IsSuccessStatusCode)
         {
-            //Aca Presente error Obtiene nulos
-            var sesionUsuario = await loginResponse.Content.ReadFromJsonAsync<LoginClase>();
+            //Aca Presente error Obtiene nulos 16/06/2023
+            var sesionUsuario = await loginResponse.Content.ReadFromJsonAsync<Usuario>();
             var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
             await autenticacionExt.ActualizarEstadoAutenticacion(sesionUsuario);
 

@@ -79,6 +79,7 @@ namespace BlazorCRUD.Server.Controllers
             if (login.Correo.Equals(sesionDTO.Email) && login.Clave.Equals(sesionDTO.Password))
             {
                 sesionActual.Nombre = sesionDTO.Nombre;
+                sesionActual.Apellido = sesionDTO.Apellido;
                 sesionActual.Email = sesionDTO.Email;
 
 
@@ -86,6 +87,7 @@ namespace BlazorCRUD.Server.Controllers
             else
             {
                 sesionActual.Nombre = sesionDTO.Nombre;
+                sesionActual.Apellido = sesionDTO.Apellido;
                 sesionActual.Email = sesionDTO.Email;
 
             }

@@ -20,15 +20,18 @@ namespace BlazorCRUD.Client.Extensiones
             _sessionStorage = sessionStorage;
         }
 
-        public async Task ActualizarEstadoAutenticacion(LoginClase? sesionUsuario)
+        public async Task ActualizarEstadoAutenticacion(Usuario? sesionUsuario)
         {
             ClaimsPrincipal claimsPrincipal;
+            const string appelidoClaim = "";
+
             if (sesionUsuario != null)
             {
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,sesionUsuario.Correo),
-                    new Claim(ClaimTypes.Email,sesionUsuario.Correo)
+                    new Claim(ClaimTypes.Name,sesionUsuario.Nombre +" "+ sesionUsuario.Apellido),
+                    new Claim(ClaimTypes.Email,sesionUsuario.Email),
+                   
                 }, "JwtAuth"));
 
                 await _sessionStorage.GuardarStorage("sesionUsuario", sesionUsuario);
