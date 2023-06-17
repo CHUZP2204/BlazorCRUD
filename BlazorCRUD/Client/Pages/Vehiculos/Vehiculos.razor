@@ -1,0 +1,144 @@
+﻿@page "/Vehiculos"
+@inject HttpClient Http
+@using BlazorCRUD.Shared;
+@inject IJSRuntime JS  /*Invocar codigo de javascript, usar ventana confirm*/
+@using System.IO
+@using CsvHelper
+@using System.Globalization;
+
+
+<h3>Vehiculos</h3>
+<br />
+
+<div>
+    <div class="col-md-6">
+        <a href="/crear-Vehiculo" class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Nuevo Vehiculo
+        </a>
+    </div>
+</div>
+
+@if (listaObtenida == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th># Vehiculo</th>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehiculos in listaObtenida)
+            {
+                <tr>
+                    <td>@vehiculos.IdVehiculo</td>
+                    <td>@vehiculos.PlacaVehiculo</td>
+                    <td>@vehiculos.ModeloVehiculo</td>
+                    <td>
+                        <a href="/editar-Vehiculo/@vehiculos.IdVehiculo" class="btn btn-secondary" role="button">Editar</a>
+                        <a class="btn btn-danger" role="button" @onclick="@(() => BorrarVehiculo(vehiculos.IdVehiculo))">Borrar</a> <!--Aca se usa expresion lambda para llamar un metodo y pasar su parametro-->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button @onclick="ExportarCSV">Exportar a CSV</button>
+    <button @onclick="ExportarExcel">Exportar a EXCEL</button>
+}
+
+@code {
+    private List<TblVehiculo> listaObtenida;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        listaObtenida = await Http.GetFromJsonAsync<List<TblVehiculo>>("api/Vhiculo");
+    }
+
+    async Task BorrarVehiculo(int idVehiculo)
+    {
+        //Usar LinQ del lado del cliente (lambda expresion)
+
+        var vehiculoSeleccionado = listaObtenida.First(x => x.IdVehiculo == idVehiculo);
+
+        string mensajeConfirmacion = "Deseas Borrar Al Vehiculo Placa? " + vehiculoSeleccionado.PlacaVehiculo;
+
+        //Por medio del if del resultado del booleano ejecutar accion de borrar
+        if (await JS.InvokeAsync<bool>("confirm", mensajeConfirmacion))
+        {
+            await Http.DeleteAsync($"api/Vhiculo/{idVehiculo}");
+            await OnInitializedAsync();
+        }
+
+
+    }
+
+    private void ExportarCSV()
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            using (var writer = new StreamWriter(memoryStream))
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) //Para usar CultureInfo se exporta el System.Globalization;
+                {
+                    csv.WriteRecords(listaObtenida);
+                }
+
+                var arr = memoryStream.ToArray();
+                JS.GuardarComo("Vehiculos.csv", arr);
+            }
+        }
+    }
+
+    private void ExportarExcel()
+    {
+
+        // If you are a commercial business and have
+        // purchased commercial licenses use the static property
+        // LicenseContext of the ExcelPackage class:
+       // ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+        // If you use EPPlus in a noncommercial context
+        // according to the Polyform Noncommercial license:
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        //using (var package = new ExcelPackage(new FileInfo("MyWorkbook.xlsx")))
+        //{
+
+       // }
+        //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+        using (var package = new ExcelPackage())
+        {
+            var worksheet = package.Workbook.Worksheets.Add("Vehiculos.csv");
+
+            var tableBody = worksheet.Cells["A1:A1"].LoadFromCollection(
+                from f in listaObtenida
+                select new { f.IdVehiculo, f.PlacaVehiculo, f.ModeloVehiculo }, true);
+
+            var header = worksheet.Cells["A1:C1"];
+            worksheet.DefaultColWidth = 25;
+            tableBody.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            tableBody.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            tableBody.Style.Fill.BackgroundColor.SetColor(Color.WhiteSmoke);
+            tableBody.Style.Border.BorderAround(ExcelBorderStyle.Medium);
+
+            header.Style.Font.Bold = true;
+            header.Style.Font.Color.SetColor(Color.White);
+            header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            header.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+
+            JS.GuardarComo("Vehiculos.xlsx", package.GetAsByteArray());
+        }
+    }
+
+}

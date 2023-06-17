@@ -1,0 +1,57 @@
+﻿@page "/Prueba2PDF"
+@inject HttpClient Http
+@inject IJSRuntime js
+
+
+<h3>Prueba2PDF</h3>
+
+
+<button @onclick="DownloadPdf">Ver PDF1</button>
+<button @onclick="DownloadPdf2">Ver PDF2</button>
+<div class="row">
+    <div class="col-12">
+        <div class="card h-300">
+            <div id="iframeId"></div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private async Task DownloadPdf()
+    {
+        // Hacer una llamada GET al controlador PdfController para obtener el archivo PDF
+        var response = await Http.GetAsync("/api/ReportePdf/ObtenerPdf");
+
+        // Obtener los bytes del archivo PDF
+        byte[] pdfBytes = await response.Content.ReadAsByteArrayAsync();
+
+        // Descargar el archivo PDF en el navegador
+        //await JSRuntime.InvokeAsync<object>("saveAsFile", "mypdf.pdf", Convert.ToBase64String(pdfBytes));
+
+        // await js.InvokeVoidAsync("DownloadPdf", "MiPDF.pdf", Convert.ToBase64String(pdfBytes));
+
+        await js.InvokeVoidAsync("ViewPdf",
+                "iframeId",
+                Convert.ToBase64String((pdfBytes))
+                );
+    }
+
+    private async Task DownloadPdf2()
+    {
+        // Hacer una llamada GET al controlador PdfController para obtener el archivo PDF
+        var response = await Http.GetAsync("/api/ReportePdf/ObtenerPdf2");
+
+        // Obtener los bytes del archivo PDF
+        byte[] pdfBytes = await response.Content.ReadAsByteArrayAsync();
+
+        // Descargar el archivo PDF en el navegador
+        //await JSRuntime.InvokeAsync<object>("saveAsFile", "mypdf.pdf", Convert.ToBase64String(pdfBytes));
+
+        // await js.InvokeVoidAsync("DownloadPdf", "MiPDF.pdf", Convert.ToBase64String(pdfBytes));
+
+        await js.InvokeVoidAsync("ViewPdf",
+                "iframeId",
+                Convert.ToBase64String((pdfBytes))
+                );
+    }
+}

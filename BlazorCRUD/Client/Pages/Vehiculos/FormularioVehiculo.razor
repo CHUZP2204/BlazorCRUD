@@ -1,0 +1,33 @@
+﻿@using BlazorCRUD.Shared;
+<h3>FormularioVehiculo</h3>
+
+<EditForm Model="@VehiculoForm" OnValidSubmit="@llamarMetodo">
+    <DataAnnotationsValidator />
+    <div class="form-control">
+        <div>
+            <label>Placa</label>
+            <div>
+                <InputText @bind-Value="VehiculoForm.PlacaVehiculo" />
+                <ValidationMessage For="@(() => VehiculoForm.PlacaVehiculo)" />
+            </div>
+        </div>
+        <div>
+            <label>Modelo Vehiculo</label>
+            <div>
+                <InputText @bind-Value="VehiculoForm.ModeloVehiculo" />
+                <ValidationMessage For="@(() => VehiculoForm.ModeloVehiculo)" />
+            </div>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success">@TextoBoton</button>
+
+</EditForm>
+
+@code {
+    [Parameter] public TblVehiculo VehiculoForm { get; set; } = new TblVehiculo();
+    [Parameter] public String TextoBoton { get; set; } = "Salvar Cambios";
+    [Parameter] public EventCallback llamarMetodo { get; set; } //Recibir como parametro una funcion
+
+
+}

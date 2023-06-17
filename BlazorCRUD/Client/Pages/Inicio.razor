@@ -1,0 +1,100 @@
+﻿@page "/"
+@inject HttpClient Http
+@using BlazorCRUD.Shared;
+
+<h2>  Mi primer pagina en BLAZOR CRUD </h2>
+
+<div >
+    <div class="col-md-6">
+        <a href="/usuario/nuevo" class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Nuevo Usuario
+        </a>
+    </div>
+</div>
+
+<div class="input-group-append">
+    <input type="text" class="form-control" placeholder="Buscar por nombre"
+           @bind="cadenaBusquedad" @bind:event="oninput" @onkeyup="FiltroBusqueda" />
+
+    @if (cadenaBusquedad.Length > 0)
+    {
+        <div class="input-group-append">
+            <button class="btn btn-danger" @onclick="LimpiarBusqueda">
+                <i class="fas fa-times"> </i>
+                Limpiar
+            </button>
+        </div>
+
+    }
+
+</div>
+
+
+@if (lista == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in lista)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Apellido</td>
+                    <td>@usuario.Telefono</td>
+                    <td>
+                        <a href="/usuario/editar/@usuario.Id" class="btn btn-secondary" role="button">Editar</a>
+                        <a href="/usuario/borrar/@usuario.Id" class="btn btn-danger" role="button">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Usuario> lista;
+
+    private List<Usuario> listaAux;
+
+    string cadenaBusquedad = String.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        lista = await Http.GetFromJsonAsync<List<Usuario>>("api/Usuario");
+        listaAux = lista;
+    }
+
+    protected void FiltroBusqueda()
+    {
+        if (!string.IsNullOrEmpty(cadenaBusquedad))
+        {
+            lista = listaAux.Where(x => x.Nombre.IndexOf(cadenaBusquedad, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+
+        }
+        else
+        {
+            lista = listaAux;
+        }
+    }
+
+    public void LimpiarBusqueda()
+    {
+        cadenaBusquedad = String.Empty;
+        lista = listaAux;
+    }
+
+}

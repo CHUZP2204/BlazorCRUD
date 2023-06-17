@@ -1,0 +1,430 @@
+﻿
+.page-wrapper .sidebar-wrapper,
+.sidebar-wrapper .sidebar-brand > a,
+.sidebar-wrapper .sideber-menu,
+.sidebar-wrapper .sidebar-search {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 03.s ease;
+    transition: all 0.3s ease;
+}
+
+body {
+    margin: 0px;
+}
+
+.pagina {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+    .pagina main, .pagina .contenido {
+        width: 100%;
+        height: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 60px;
+        /*padding: 10px;*/
+        /*box-sizing:border-box;*/
+    }
+
+/*Barra Horizontal NavBar*/
+.espacioBlanco {
+    width: 100%;
+    height: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.pagina .barra-horizontal {
+    width: 100%;
+    height: 60px;
+    background: #1e2229;
+    position: fixed;
+    display: flex
+}
+
+.items {
+    width: calc(100% -55px);
+    display: flex;
+}
+
+    .items a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.menuH {
+    padding: 10px;
+    width: 55px;
+}
+
+    /*simbolo hamburguesa*/
+    .menuH label, .iconoHamburguesa {
+        width: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        height: 28px;
+    }
+
+.lineaHambur {
+    width: 100%;
+    height: 6px;
+    border-radius: 2px;
+    transform: 0.5s;
+    background: #ccc;
+    margin-bottom: 5px;
+}
+
+    .lineaHambur:nth-child(1),
+    .lineaHambur:nth-child(1) {
+        margin-bottom: 5px;
+    }
+
+
+    .lineaHambur:nth-child(3) {
+        margin-bottom: 0%;
+    }
+
+
+/**sidebar simbolo cerrar/*/
+
+#mostrar-Barra + .barraH .page-wrapper.chiller-theme nav .sidebar-content .sidebar-brand
+label .iconoHamburguesa .lineaHambur {
+    margin: 0;
+    background-color: red;
+}
+
+    #mostrar-Barra + .barraH .page-wrapper.chiller-theme nav .sidebar-content .sidebar-brand
+    label .iconoHamburguesa .lineaHambur:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 9px);
+    }
+
+    #mostrar-Barra + .barraH .page-wrapper.chiller-theme nav .sidebar-content .sidebar-brand
+    label .iconoHamburguesa .lineaHambur:nth-child(2) {
+        transform: translate(-50px);
+    }
+
+    #mostrar-Barra + .barraH .page-wrapper.chiller-theme nav .sidebar-content .sidebar-brand
+    label .iconoHamburguesa .lineaHambur:nth-child(3) {
+        transform: rotate(-45deg) translate(0px);
+    }
+
+
+/*navabar*/
+
+#mostrar-Barra + .barraH + .EspacioBlanco
+.barra-horizontal .menuH {
+    display: none;
+}
+
+#mostrar-Barra:checked + .barraH + .EspacioBlanco
+.barra-horizontal .menuH {
+    display: block;
+}
+/* convertir en una equis el menu hamburguer del navbar
+
+#mostrar-Barra:checked+.barraH+div+.EspacioBlanco 
+.barra-horizontal .menuH label .iconoHamburguesa .lineaHambur
+{
+    margin: 0;
+    background-color: red;
+}
+
+#mostrar-Barra:checked+.barraH+div+.EspacioBlanco 
+.barra-horizontal .menuH label .iconoHamburguesa .lineaHambur:nth-child(1) {
+transform: rotate(45deg) translate(8px, 9px);    
+
+}
+
+#mostrar-Barra:checked+.barraH+div+.EspacioBlanco 
+.barra-horizontal .menuH label .iconoHamburguesa .lineaHambur:nth-child(2){
+    transform: translate(-50px);
+}
+
+#mostrar-Barra:checked+.barraH+div+.EspacioBlanco 
+.barra-horizontal .menuH label .iconoHamburguesa .lineaHambur:nth-child(3){
+    transform: rotate(-45deg) translate(0px);
+    
+
+}
+*/
+
+
+
+/*Espacio Dedicado a Sidebar cuando esta visible*/
+.barraH {
+    height: 100%;
+    width: max-content;
+    padding-left: 260px;
+}
+
+/*Prueba Listado*/
+.pagina .contenido .lista {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    height: 100px;
+}
+
+    .pagina .contenido .lista div {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+/*Page Wrapper - sidebar*/
+.page-wrapper {
+    height: 100%;
+}
+
+/*ocultar sidebar*/
+/*Ocultar CHECKBOX*/
+#mostrar-Barra {
+    display: none;
+}
+
+/*Boton De Mostrar SIDEBAR*/
+#btnJesus {
+    display: none;
+    margin-top: 12px;
+    padding: 5px 11px;
+    background-color: #ff7;
+    border: 1px solid;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/*Al dar click (se marca CHECk en el CHECKBOX) se oculta el elemento*/
+/*page-wrapper.chiller theme y el barraH*/
+/*AL QUITAR BARRA H el espacio que este ocupaba se elimina y La etiqueta CONTENIDO se desplaza o*/
+/*Se Auto rellena automaticamente*/
+
+#mostrar-Barra:checked ~ .page-wrapper.chiller-theme, #mostrar-Barra:checked ~ .barraH {
+    display: none;
+}
+/*Ocultar Sidebar*/
+
+
+
+/*SIDEBAR ESTILO*/
+
+
+.chiller-theme {
+    background: #1e2229;
+    width: 260px;
+    position: fixed;
+    left: 0;
+}
+
+.page-wrapper .sidebar-wrapper {
+    width: 260px;
+    height: 100%;
+    top: 0;
+    left: -300px;
+    z-index: 999;
+}
+
+    .page-wrapper .sidebar-wrapper .sidebar-content {
+        height: 100%;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    /**/
+    .page-wrapper .sidebar-wrapper .sidebar-brand {
+        padding: 14px 20px;
+        align-items: center;
+        display: flex;
+        height:60px
+    }
+
+        .page-wrapper .sidebar-wrapper .sidebar-brand > a {
+            font-weight: bold;
+            text-transform: uppercase;
+            flex-grow: 1;
+            color: aliceblue;
+        }
+
+        .page-wrapper .sidebar-wrapper .sidebar-brand > div {
+            cursor: pointer;
+            font-size: 20px;
+            color: red;
+            margin-top: 0px;
+            margin-left: -12px;
+            margin-right: 0px;
+        }
+    /**/
+    /*Header*/
+    .page-wrapper .sidebar-wrapper .sidebar-header {
+        padding: 10px;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 1);
+    }
+
+        .page-wrapper .sidebar-wrapper .sidebar-header
+        .userPicture {
+            float: left;
+            width: 50%;
+            height: 50%;
+            padding: 0.2rem;
+        }
+
+            .page-wrapper .sidebar-wrapper .sidebar-header
+            .userPicture img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+            }
+
+        .page-wrapper .sidebar-wrapper .sidebar-header
+        .userInfo {
+            float: left;
+            padding: 1px;
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+            .page-wrapper .sidebar-wrapper .sidebar-header
+            .userInfo span {
+                flex-direction: column;
+            }
+
+                .page-wrapper .sidebar-wrapper .sidebar-header
+                .userInfo span > strong > a {
+                    font-size: 14px;
+                    color: aliceblue;
+                }
+
+
+.sidebar-wrapper .sidebar-header .userInfo
+.user-status i {
+    font-size: 11px;
+    margin-right: 4px;
+    color: #00ff21;
+}
+
+.sidebar-wrapper .sidebar-content .sidebar-header .userInfo
+.user-status span {
+    font-size: 14px;
+    color: aliceblue;
+}
+
+/*Busqueda*/
+
+.page-wrapper .sidebar-wrapper .sidebar-content .sidebar-search {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    padding: 20px 0px;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 1);
+}
+
+.sidebar-search .inputLogo {
+    font-size: 30px;
+    color: black;
+    padding: 2px;
+    position: absolute;
+    top: 17px;
+    right: 30px;
+    overflow: hidden;
+    background: none;
+    width: 30px;
+}
+
+.sidebar-search .inputGroup {
+    padding: 2px;
+    background-color: gray;
+    width: 80%;
+}
+
+    .sidebar-search .inputGroup input {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        border: 0px;
+        padding: 1px;
+        background: white;
+        border-radius: 3px;
+    }
+
+.sidebar-menu {
+    border-top: 1px solid rgba(255, 255, 255, 1);
+}
+
+    .sidebar-menu ul .Titulo-Menu {
+        font-weight: bold;
+        font-size: 14px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .sidebar-menu ul {
+        list-style-type: none;
+        padding-left: 10px;
+    }
+        /*Menus UL LI*/
+        .sidebar-menu ul li {
+            color: aliceblue;
+            width: 100%;
+        }
+
+            /*Alertas*/
+
+            .sidebar-menu ul li div .notificacion-yellow {
+                color: #000;
+                padding: 0.35em 0.65em;
+                font-size: 0.55em;
+                font-weight: 700;
+                line-height: 1;
+                text-align: center;
+                vertical-align: baseline;
+                border-radius: 0.25rem;
+                background-color: yellow;
+                padding-right: .6em;
+                padding-left: .6em;
+                border-radius: 1rem;
+            }
+
+            /*Simbolos Fa*/
+            .sidebar-menu ul li div span {
+                width: 10px;
+            }
+
+                .sidebar-menu ul li div span i {
+                    width: 15px;
+                    padding: 10px 10px;
+                }
+
+/*sidebar menu2*/
+
+.sidebar-menu2 {
+    width: 100%;
+    height: 100px;
+}
+
+/*Footer sidebar*/
+
+.sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 1);
+}
+
+    .sidebar-footer p {
+        color: aliceblue;
+    }

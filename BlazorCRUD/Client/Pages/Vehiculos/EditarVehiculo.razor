@@ -1,0 +1,32 @@
+﻿@page "/editar-Vehiculo/{IdVehiculo:int}"
+@inject NavigationManager navigationManager
+@inject HttpClient Http
+@using BlazorCRUD.Shared
+
+
+<h3>Editar Vehiculo</h3>
+
+<FormularioVehiculo TextoBoton="Editar Persona" llamarMetodo="metodoModificar" VehiculoForm="Vehiculo"></FormularioVehiculo>
+
+<button @onclick="Cancel">Cancelar</button>
+
+@code {
+    [Parameter] public int IdVehiculo { get; set; }
+    TblVehiculo Vehiculo = new TblVehiculo();
+
+    protected async override  Task OnParametersSetAsync()
+    {
+        Vehiculo = await Http.GetFromJsonAsync<TblVehiculo>("api/Vhiculo/" + IdVehiculo.ToString());
+    }
+
+    protected async Task metodoModificar()
+    {
+        await Http.PutAsJsonAsync("api/Vhiculo", Vehiculo);
+        navigationManager.NavigateTo("/Vehiculos");
+    }
+
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/Vehiculos");
+    }
+}

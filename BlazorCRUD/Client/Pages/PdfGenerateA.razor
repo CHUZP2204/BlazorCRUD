@@ -1,0 +1,58 @@
+﻿@page "/pdfGenerate"
+@inject IJSRuntime js
+@using BlazorCRUD.Shared.Clases
+
+
+
+<h3>PDF Generador</h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-success" @onclick="@(p=>DownloadFile("report.pdf"))">Descargar</button>
+            <button type="button" class="btn btn-info" @onclick="@(p=>OpenToFrame("iframeId"))">Ver PDF</button>
+            <button type="button" class="btn btn-warning" @onclick="@(p=>OpenNewTab("report.pdf"))">Ver Nueva Ventana</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <div class="card h-300">
+                <div id="iframeId"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    
+
+    //Se agrego via  Nuugets la siguiente libreria iTextSharp.LGPLv2.Core
+
+
+    //Metodo Guardar
+    private void DownloadFile(string filename)
+    {
+        var pdf = new PDFGenerator(); //Conflictos de nombre clase y componente
+
+        pdf.DownloadPdf(js, filename);
+    }
+
+    //Abrir en un IFRAME
+    private void OpenToFrame(string idiframe)
+    {
+        var pdf = new PDFGenerator(); //Conflictos de nombre clase y componente
+
+        pdf.ViewPdf(js, idiframe);
+    }
+    //Abrir en una Ventana
+    private void OpenNewTab(string filename)
+    {
+        var pdf = new PDFGenerator(); //Conflictos de nombre clase y componente
+
+        pdf.ViewPdfNewTab(js, filename);
+    }
+
+}

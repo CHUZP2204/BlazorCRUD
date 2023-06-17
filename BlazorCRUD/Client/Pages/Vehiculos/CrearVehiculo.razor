@@ -1,0 +1,24 @@
+﻿@page "/crear-Vehiculo" 
+@inject HttpClient Http
+@using BlazorCRUD.Shared
+@inject NavigationManager navigationManager
+
+<h3>Crear Vehiculo</h3>
+
+<FormularioVehiculo TextoBoton="Crear Vehiculo" llamarMetodo="VehiculoCrear" VehiculoForm="Vehiculo" ></FormularioVehiculo>
+
+
+<button @onclick="Cancel">Cancelar</button>
+
+@code {
+    TblVehiculo Vehiculo = new TblVehiculo();
+    async Task VehiculoCrear()
+    {
+        await Http.PostAsJsonAsync("api/Vhiculo", Vehiculo);
+        navigationManager.NavigateTo("/Vehiculos");
+    }
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/Vehiculos");
+    }
+}

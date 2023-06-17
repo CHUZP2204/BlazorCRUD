@@ -1,0 +1,58 @@
+﻿@inherits LayoutComponentBase
+@using BlazorCRUD.Client.Shared;
+
+<div class="pagina">
+    <input type="checkbox" id="mostrar-Barra">
+    <div class="barraH">
+        <BarraLateral />
+    </div>
+
+    <div class="EspacioBlanco">
+        <NavMenu />
+    </div>
+
+    <main class="contenido">
+        <h1>Este es el contenido</h1>
+
+
+        <div class="pagina-rotativa">
+            @Body
+        </div>
+
+        <div class="lista">
+            <div>
+                Cuadro1
+            </div>
+            <div>
+                Cuadro2
+            </div>
+            <div>
+                Cuadro3
+            </div>
+        </div>
+        <div class="lista">
+            <div>
+                Cuadro1
+            </div>
+            <div>
+                Cuadro2
+            </div>
+            <div>
+                Cuadro3
+            </div>
+        </div>
+        <div class="lista">
+            <div>
+                Cuadro1
+            </div>
+            <div>
+                Cuadro2
+            </div>
+            <div>
+                Cuadro3
+            </div>
+        </div>
+
+
+    </main>
+</div>

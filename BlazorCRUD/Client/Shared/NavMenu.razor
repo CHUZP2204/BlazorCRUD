@@ -1,0 +1,44 @@
+﻿<!--Inicio NAVBAR Horizontal-->
+<nav class="barra-horizontal">
+    <div class="menuH">
+        <label for="mostrar-Barra">
+            <div class="iconoHamburguesa">
+                <div class="lineaHambur"></div>
+                <div class="lineaHambur"></div>
+                <div class="lineaHambur"></div>
+            </div>
+        </label>
+
+    </div>
+
+    <label for="mostrar-Barra" id="btnJesus">Mostrar</label>
+    <div class="items">
+        <div class="item">
+            <a href="#">
+                <div class="item-text">
+                    hola
+                </div>
+            </a>
+        </div>
+        <div class="item">
+            <a href="#">
+                <div class="item-text">
+                    hola
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+</nav>
+<!--Fin Navbar-->
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
