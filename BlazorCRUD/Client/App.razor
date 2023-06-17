@@ -1,12 +1,35 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<!--Agregar Metodo Cascada Para Validacion De USuario-->
+@using BlazorCRUD.Client.Pages
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager navManager
+
+
+<!--Se agrego cascading para acceder a la informacion del usuario dentro de las internas etiquetas-->
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
+                <NotAuthorized>
+                    @{
+                        if (context.User.Identity?.IsAuthenticated != true)
+                        {
+                            navManager.NavigateTo("/");
+                        }
+                        else
+                        {
+                            <p class="alert alert-danger">No esta autorizado para ver esta Pagina</p>
+                        }
+                    }
+                </NotAuthorized>
+            </AuthorizeView>
+           
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+
