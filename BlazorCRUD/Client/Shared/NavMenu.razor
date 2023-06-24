@@ -5,6 +5,9 @@
 @using BlazorCRUD.Shared
 @using BlazorCRUD.Client.Extensiones
 @using Microsoft.AspNetCore.Components.Authorization
+
+@inject Blazored.SessionStorage.ISessionStorageService sesionStorage
+
 <!--Inicio NAVBAR Horizontal-->
 <nav class="barra-horizontal">
     <div class="menuH">
@@ -61,6 +64,9 @@
     {
         var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
         await autenticacionExt.ActualizarEstadoAutenticacion(null);
+
+        await sesionStorage.RemoveItemAsync("DataUSer");
+
         navManager.NavigateTo("/", true);
     }
 }

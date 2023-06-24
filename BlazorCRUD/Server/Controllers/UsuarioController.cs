@@ -16,12 +16,17 @@ namespace BlazorCRUD.Server.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        
+
         private readonly IUsuario iUsuario;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public FileChecker oFileChecker = new FileChecker();
 
-        public UsuarioController(IUsuario iUser, IWebHostEnvironment webHostEnvironment)
+        public UsuarioController(
+            IUsuario iUser,
+            IWebHostEnvironment webHostEnvironment
+            )
         {
             iUsuario = iUser;
             _webHostEnvironment = webHostEnvironment;
@@ -43,12 +48,17 @@ namespace BlazorCRUD.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult MostrarUsuario(int id)
         {
+            //var valor = HttpContext.Session.GetString("NombreVariable");
             Modelos.Usuario u = iUsuario.DatosUsuario(id);
             if (u != null)
             {
+                
                 return Ok(u);
             }
             return NotFound();
+
+            
+            
         }
 
         [HttpPut]
@@ -74,7 +84,7 @@ namespace BlazorCRUD.Server.Controllers
             Modelos.Usuario sesionDTO = iUsuario.DatosUsuario1(login.Correo);
 
             Modelos.Usuario sesionActual = new Modelos.Usuario();
-
+            
 
             if (login.Correo.Equals(sesionDTO.Email) && login.Clave.Equals(sesionDTO.Password))
             {
@@ -82,6 +92,8 @@ namespace BlazorCRUD.Server.Controllers
                 sesionActual.Apellido = sesionDTO.Apellido;
                 sesionActual.Email = sesionDTO.Email;
 
+                
+                
 
             }
             else
@@ -91,8 +103,9 @@ namespace BlazorCRUD.Server.Controllers
                 sesionActual.Email = sesionDTO.Email;
 
             }
-
+            
             return StatusCode(StatusCodes.Status200OK, sesionActual); //Investigar
+
         }
     }
 }

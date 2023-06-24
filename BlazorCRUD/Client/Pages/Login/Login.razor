@@ -5,9 +5,16 @@
 @inject NavigationManager navManager
 @inject AuthenticationStateProvider autenticacionProvider
 
+@inject Blazored.SessionStorage.ISessionStorageService sesionStorage
+
+
+
 @using BlazorCRUD.Shared
 @using BlazorCRUD.Client.Extensiones
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization;
+
+
 
 
 
@@ -45,6 +52,10 @@
             var sesionUsuario = await loginResponse.Content.ReadFromJsonAsync<Usuario>();
             var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
             await autenticacionExt.ActualizarEstadoAutenticacion(sesionUsuario);
+
+            ///Usar variables Sesion
+            ///Asigna Datos
+            await sesionStorage.SetItemAsync("DataUser", sesionUsuario.Nombre);
 
             navManager.NavigateTo("/Index");
         }
