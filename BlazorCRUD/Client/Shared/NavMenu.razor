@@ -18,9 +18,8 @@
                 <div class="lineaHambur"></div>
             </div>
         </label>
-
     </div>
-   
+
     <label for="mostrar-Barra" id="btnJesus">Mostrar</label>
     <div class="items">
         <div class="item">
@@ -30,23 +29,23 @@
                 </div>
             </a>
         </div>
-        
-        <div class="item">
-            <a href="#">
-                <div class="item-text">
-                    item1
-                </div>
-            </a>
-        </div>
-        <div class="item">
-            <a href="#">
-                <div class="item-text">
-                    <a @onclick="CerrarSesion" href="javascript:void(0)">Salir</a>
-                </div>
-            </a>
-        </div>
-    </div>
 
+        
+
+    </div>
+    <div class="menuBusqueda">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </div>
+    <div class="menuH">
+
+        <a @onclick="CerrarSesion" class="btn btn-danger" href="javascript:void(0)">
+            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+        </a>
+
+    </div>
 
 </nav>
 <!--Fin Navbar-->

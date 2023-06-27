@@ -46,9 +46,15 @@ body {
 }
 
 .items {
-    width: calc(100% -55px);
+    width: 100%;
     display: flex;
+    flex-direction:row;
+
 }
+
+    .items .item{
+        width:100%;
+    } 
 
     .items a {
         color: #fff;
@@ -58,6 +64,11 @@ body {
 .menuH {
     padding: 10px;
     width: 55px;
+}
+
+.menuBusqueda {
+    padding: 10px;
+    
 }
 
     /*simbolo hamburguesa*/
