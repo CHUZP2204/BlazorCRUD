@@ -19,7 +19,7 @@ body {
     flex-direction: row;
 }
 
-    .pagina main, .pagina .contenido {
+    .pagina main, .pagina .contenido{
         width: 100%;
         height: 100%;
         margin-left: 10px;
@@ -45,11 +45,20 @@ body {
     display: flex
 }
 
-.items {
-    width: 100%;
-    display: flex;
-    flex-direction:row;
 
+
+.items {
+    display: flex;
+    flex-direction: row;
+}
+@media (min-width: 768px) {
+    /* Estilos específicos para pantallas de menos de 768px de ancho */
+    /* Aquí puedes agregar los estilos que deseas aplicar */
+    .items {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
 }
 
     .items .item{

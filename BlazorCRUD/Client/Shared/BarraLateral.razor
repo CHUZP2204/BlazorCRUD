@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization;
 @using Microsoft.AspNetCore.Authorization;
 
-@code {
+@using System.Timers
 
-}
+@inject IJSRuntime JSRuntime
+
 
 <div class="page-wrapper chiller-theme">
     <nav class="sidebar-wrapper">
@@ -34,7 +35,7 @@
                                 <AuthorizeView>
                                     @context.User.Identity!.Name
                                 </AuthorizeView>
-                                
+
                             </a>
                         </strong>
                     </span>
@@ -137,6 +138,8 @@
                         </div>
                     </li>
                     <li class="Titulo-Menu">
+                        <p>Hora actual es: <span id="current-time">@currentTime</span></p>
+
                         <span>Hora 15:00</span>
                     </li>
                 </ul>
@@ -150,3 +153,32 @@
         </div>
     </nav>
 </div>
+
+
+@code {
+    private Timer timer = new Timer(1000);
+    private DateTime currentTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        timer = new Timer(1000); // Intervalo de 1 segundo
+        timer.Elapsed += TimerElapsed;
+        timer.Start();
+
+        // Obtén la hora actual una vez para mostrarla al cargar la página
+        currentTime = DateTime.Now;
+        //string fechaFormateada = currentTime.ToString("HH:mm:ss");
+
+        await JSRuntime.InvokeVoidAsync("updateCurrentTime", currentTime);
+    }
+
+    private void TimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        currentTime = DateTime.Now;
+        //string fechaFormateada = currentTime.ToString("HH:mm:ss");
+        StateHasChanged();
+
+        // Llama a una función JavaScript para actualizar la hora en el DOM
+        JSRuntime.InvokeVoidAsync("updateCurrentTime", currentTime);
+    }
+}
