@@ -27,14 +27,14 @@
         </div>
         <div class="mb-3">
             <label>Correo</label>
-            <input @bind="login.Correo" class="form-control" />
+            <input type="email" @bind="login.Correo" class="form-control" />
         </div>
         <div class="mb-3">
             <label>Contrasenia</label>
-            <input @bind="login.Clave" class="form-control" />
+            <input type="password" @bind="login.Clave" class="form-control" />
         </div>
         <div class="mb-3">
-            <button @onclick="IniciarSesion" class="btn btn-primary">Login</button>
+            <input type="submit" @onclick="IniciarSesion" class="btn btn-primary">Login</input>
         </div>
     </div>
 </div>
