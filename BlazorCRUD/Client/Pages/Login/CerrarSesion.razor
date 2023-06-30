@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using BlazorCRUD.Client.Extensiones
+
+@inject HttpClient httpClient
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider autenticacionProvider
+
+@inject Blazored.SessionStorage.ISessionStorageService sesionStorage
+
+<a @onclick="CerrarSession" class="btn btn-danger" href="javascript:void(0)">
+    <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+</a>
+
+@code {
+    private async Task CerrarSession()
+    {
+        var autenticacionExt = (AutenticacionExtension)autenticacionProvider;
+        await autenticacionExt.ActualizarEstadoAutenticacion(null);
+
+        await sesionStorage.RemoveItemAsync("DataUSer");
+
+        navManager.NavigateTo("/", true);
+    }
+}
