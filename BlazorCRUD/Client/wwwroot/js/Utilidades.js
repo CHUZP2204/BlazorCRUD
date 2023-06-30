@@ -9,3 +9,14 @@
 
 //Esta funcion recibe  el nombre de un archivo y un archivo en base 64 y lo que hace es crear un
 //link dinamico y hace que se descargue un archivo
+
+function alternarCheckbox() {
+    var checkbox = document.getElementById("mostrar-Barra");
+
+    if (checkbox.checked) {
+        checkbox.checked = false;
+    } else {
+        checkbox.checked = true;
+    }
+
+}

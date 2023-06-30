@@ -2,9 +2,16 @@
 @using BlazorCRUD.Client.Shared;
 @using BlazorCRUD.Client.Extensiones;
 
+@using Microsoft.Extensions.Configuration
+
+
 @using Microsoft.AspNetCore.Components.Authorization;
 @inject NavigationManager navManager
 @inject AuthenticationStateProvider autenticacionProvider
+
+@inject IConfiguration Configuration
+@inject IJSRuntime JSRuntime
+
 
 
 <div class="pagina">
@@ -12,7 +19,8 @@
     <!--Checked = No Aparece Barra Laterl-->
     <!--Sin Checked = Aparece Barra Laterl-->
     <!--Esto Esta Controlado Por CSS-->
-    <input checked="checked" type="checkbox" id="mostrar-Barra"> 
+    <input type="checkbox" id="mostrar-Barra" @bind="@IsChecked" />
+
     <!---->
     <div class="barraH">
         <BarraLateral />
@@ -22,13 +30,13 @@
         <NavMenu />
     </div>
     <div>
-        
     </div>
 
     <main class="contenido">
-        
-        <h1>Este es el contenido</h1>
 
+        <h1>Este es el contenido</h1>
+        <h2>Boton Blazor Activar/Desactivar Barra Lateral</h2>
+        <button @onclick="ToggleCheckbox">Activar/Desactivar</button>
 
         <div class="pagina-rotativa">
             @Body
@@ -36,7 +44,8 @@
 
         <div class="lista">
             <div>
-                Cuadro1
+                
+                
             </div>
             <div>
                 Cuadro2
@@ -71,3 +80,21 @@
 
     </main>
 </div>
+
+@code {
+    private bool IsChecked = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (bool.TryParse(await JSRuntime.InvokeAsync<string>("localStorage.getItem", "isChecked"), out bool isChecked))
+        {
+            IsChecked = isChecked;
+        }
+    }
+    private async Task ToggleCheckbox()
+    {
+        IsChecked = !IsChecked;
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "isChecked", IsChecked.ToString());
+    }
+
+}
