@@ -1,0 +1,112 @@
+﻿
+@using System.Text.Json
+<h3>EjemploApi</h3>
+
+
+
+@page "/apiconsumer"
+
+<h3>Consumir una API en Blazor</h3>
+
+@if (isLoading)
+{
+    <p>Cargando...</p>
+}
+else if (apiResponse != null)
+{
+    <p>Respuesta de la API:</p>
+    <pre>@apiResponse</pre>
+}
+else
+{
+    <p>Error al cargar la API.</p>
+}
+
+<br/>
+
+
+<h4>
+    Ejemplo de Convertir Objeto JSON a Object C#
+    Serialización y Deserialización JSON con JsonSerializer
+</h4>
+
+<button @onclick="Serialize">Serializar a JSON</button>
+<button @onclick="Deserialize">Deserializar JSON</button>
+
+<p>Objeto Persona:</p>
+<pre>@personJson</pre>
+
+<p>Objeto Persona Deserializado:</p>
+<p>Nombre: @deserializedPerson?.FirstName</p>
+<p>Apellido: @deserializedPerson?.LastName</p>
+<p>Edad: @deserializedPerson?.Age</p>
+
+
+
+
+@code {
+    private string apiUrl = "https://jsonplaceholder.typicode.com/posts/1"; // Reemplaza con tu URL de API
+    private string apiResponse;
+    private bool isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        HttpClient httpClient = new HttpClient();
+
+        try
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                apiResponse = await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                apiResponse = $"Error: {response.StatusCode}";
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            apiResponse = $"Error de solicitud HTTP: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    //Codigo C# Serializar y desarializar JSON a C# y Visceversa
+    private string personJson;
+
+    //Clase de ejemplo de tipo Person, para consumir un api
+    public class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+    }
+    private Person deserializedPerson;
+
+    private void Serialize()
+    {
+        var person = new Person
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Age = 30
+            };
+
+        personJson = JsonSerializer.Serialize(person);
+    }
+
+    private void Deserialize()
+    {
+        if (!string.IsNullOrWhiteSpace(personJson))
+        {
+            deserializedPerson = JsonSerializer.Deserialize<Person>(personJson);
+        }
+    }
+
+}
