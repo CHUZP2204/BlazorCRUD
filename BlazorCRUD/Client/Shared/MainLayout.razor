@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using BlazorCRUD.Client.Shared;
 @using BlazorCRUD.Client.Extensiones;
+@using Microsoft.AspNetCore.Components
 
 @using Microsoft.Extensions.Configuration
 
@@ -34,55 +35,21 @@
 
     <main class="contenido">
 
-        <h1>Este es el contenido</h1>
-        <h2>Boton Blazor Activar/Desactivar Barra Lateral</h2>
-        <button @onclick="ToggleCheckbox">Activar/Desactivar</button>
-
+        <h6>Pagina Maestra, donde ira el contenido principal</h6>
+        <button @onclick="NavigateBack">Volver a la Página Anterior</button>
+        <!--<h2>Boton Blazor Activar/Desactivar Barra Lateral</h2>-->
+        <!--<button onclick="ToggleCheckbox">Activar/Desactivar</button>-->
+        @showBackButton
         <div class="pagina-rotativa">
             @Body
         </div>
-
-        <div class="lista">
-            <div>
-                
-                
-            </div>
-            <div>
-                Cuadro2
-            </div>
-            <div>
-                Cuadro3
-            </div>
-        </div>
-        <div class="lista">
-            <div>
-                Cuadro1
-            </div>
-            <div>
-                Cuadro2
-            </div>
-            <div>
-                Cuadro3
-            </div>
-        </div>
-        <div class="lista">
-            <div>
-                Cuadro1
-            </div>
-            <div>
-                Cuadro2
-            </div>
-            <div>
-                Cuadro3
-            </div>
-        </div>
-
 
     </main>
 </div>
 
 @code {
     private bool IsChecked = false;
+    private bool showBackButton = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,5 +63,24 @@
         IsChecked = !IsChecked;
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "isChecked", IsChecked.ToString());
     }
+    private async Task NavigateBack()
+    {
+        await JSRuntime.InvokeVoidAsync("history.back");
+        /*if (await IsLoginPage())
+        {
 
+            
+        }
+        else
+        {
+            ///
+        }*/
+        //showBackButton = JSRuntime.InvokeAsync<bool>("window.history.length > 1").Result;
+
+    }
+    /* private async Task<bool> IsLoginPage()
+          {
+          var location = await JSRuntime.InvokeAsync<string>("window.location.pathname");
+          return location.ToLowerInvariant() == "/"; // Ajusta la ruta según tu página de inicio de sesión
+    }*/
 }

@@ -1,10 +1,16 @@
 ﻿
+
 @using System.Text.Json
+@inject NavigationManager navManager
 <h3>EjemploApi</h3>
 
 
 
 @page "/apiconsumer"
+
+<h2>Ruta actual:</h2>
+<p>@navManager.Uri</p>
+<p>Ruta: @navManager.ToBaseRelativePath(navManager.Uri)</p>
 
 <h3>Consumir una API en Blazor</h3>
 
