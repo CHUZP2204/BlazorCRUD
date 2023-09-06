@@ -1,0 +1,17 @@
+﻿body {
+}
+
+#backgroundLog {
+    background: linear-gradient(-47deg, #5b56bb, #0088a6);
+    height: 649px;
+}
+
+.mt-5 {
+    width: 100%;
+    padding: 100px;
+    margin: 0px!important;
+}
+
+.editc {
+    background: azure;
+}

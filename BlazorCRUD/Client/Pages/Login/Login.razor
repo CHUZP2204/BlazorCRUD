@@ -17,27 +17,30 @@
 
 
 
-
-<h3>Login</h3>
-
-<div class="row mt-5">
-    <div class="col-lg-4 offset-lg-4 border">
-        <div class="mb-3 text-center">
-            <h3>LOGIN</h3>
-        </div>
-        <div class="mb-3">
-            <label>Correo</label>
-            <input type="email" @bind="login.Correo" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label>Contrasenia</label>
-            <input type="password" @bind="login.Clave" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input type="submit" @onclick="IniciarSesion" class="btn btn-primary">Login</input>
+<div id="backgroundLog">
+    <div class="row mt-5">
+        <div class="col-lg-4 offset-lg-4 border editc">
+            <div class="mb-3 text-center">
+                <h3>Iniciar Sesion</h3>
+            </div>
+            <div class="mb-3">
+                <label>Correo</label>
+                <input type="email" @bind="login.Correo" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Contrasenia</label>
+                <input type="password" @bind="login.Clave" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <input type="submit" @onclick="IniciarSesion" class="btn btn-primary" value="INGRESAR"></input>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 @code {
     private LoginClase login = new LoginClase();
